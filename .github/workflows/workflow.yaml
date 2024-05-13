@@ -36,15 +36,15 @@ jobs:
     - name: Read .terraform-version file (if exists)
       run: echo "TF_VERSION=$(cat .terraform-version || echo 'latest')" >> $GITHUB_ENV
 
-    - name: Configure AWS Credentials for Frankfut region audience
-      uses: aws-actions/configure-aws-credentials@v4
-      with:
-        audience: sts.amazonaws.com
-        aws-region: eu-central-1
-        role-to-assume: arn:aws:iam::039779453013:role/github-oidc-role
+    # - name: Configure AWS Credentials for Frankfut region audience
+    #   uses: aws-actions/configure-aws-credentials@v4
+    #   with:
+    #     audience: sts.amazonaws.com
+    #     aws-region: eu-central-1
+    #     role-to-assume: arn:aws:iam::039779453013:role/github-oidc-role
 
-    - name: Verifying AWS
-      run: aws sts get-caller-identity
+    # - name: Verifying AWS
+    #   run: aws sts get-caller-identity
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
     - name: Setup Terraform
