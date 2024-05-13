@@ -57,8 +57,8 @@ resource "aws_s3_bucket" "remote_state" {
 }
 
 resource "aws_iam_openid_connect_provider" "github" {
-  url             = "https://${var.url}"
-  client_id_list  = ["sts.${data.aws_partition.current.dns_suffix}"]
+  url            = "https://${var.url}"
+  client_id_list = ["sts.${data.aws_partition.current.dns_suffix}"]
 }
 
 resource "aws_iam_role" "github-oidc-role" {
@@ -68,16 +68,16 @@ resource "aws_iam_role" "github-oidc-role" {
     Version = "2012-10-17"
     Statement = [
       {
-        "Effect": "Allow",
-        "Principal": {
-          "Federated": "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.url}"
-          },
-        "Action": "sts:AssumeRoleWithWebIdentity",
-        "Condition": {
-          "StringLike": {
-            "${var.url}:sub": "repo:${var.github_org}/*",
-            "${var.url}:aud": "sts.${data.aws_partition.current.dns_suffix}"
-            }
+        "Effect" : "Allow",
+        "Principal" : {
+          "Federated" : "arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/${var.url}"
+        },
+        "Action" : "sts:AssumeRoleWithWebIdentity",
+        "Condition" : {
+          "StringLike" : {
+            "${var.url}:sub" : "repo:${var.github_org}/*",
+            "${var.url}:aud" : "sts.${data.aws_partition.current.dns_suffix}"
+          }
         }
       },
     ]
